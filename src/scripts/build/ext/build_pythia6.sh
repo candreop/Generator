@@ -338,10 +338,10 @@ elif [ $mt -eq 410 ] ; then
   exit
 else
 # new location, .f file is gzipped
-  basef=pythia-${major}.${minor}.${tiny}.f
-  #location=http://www.hepforge.org/archive/pythia6
-  location=https://www.hepforge.org/archive/pythia6
-  gzipped=".gz"
+  basef=pythia${major}${minor}${tiny}.f
+  #location=hhttp://home.thep.lu.se/~torbjorn/pythia6
+  location=http://home.thep.lu.se/~torbjorn/pythia6
+  gzipped=""
 fi
 # if we don't already have it, fetch the .f file
 if [ ! -f ${basef}_with_dummies -o ${refetch} -ne 0 ] ; then
@@ -519,8 +519,8 @@ tar xzvf ${toppath}/download/pythia6.tar.gz pythia6/pythia6_common_address.c
 mv pythia6/* .
 rmdir pythia6
 echo 'void MAIN__() {}' > main.c
-gcc -c -fPIC $m32flag main.c
-gcc -c -fPIC $m32flag pythia6_common_address.c
+gcc -c -fPIC -fcommon $m32flag main.c
+gcc -c -fPIC -fcommon $m32flag pythia6_common_address.c
 $FORT -c -fPIC -fno-second-underscore $m32flag tpythia6_called_from_cc.F
 
 cd ${toppath}/lib
